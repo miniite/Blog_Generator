@@ -1,0 +1,36 @@
+❌ Why your original line failed:
+
+response = llm.invoke(prompt.format(blog_style=blog_style, input_text=input_text, no_words=no_words))
+
+This assumes that prompt is just a regular Python string. But if prompt is a LangChain PromptTemplate, calling .format() like that tries to use the Python built-in .format(), which doesn’t exist for PromptTemplate — or it may silently return an unexpected result.
+
+This could lead to passing an invalid prompt to the model — or even returning a generator-like object if the backend expects a list or a structured object — and cause issues down the line (like StopIteration errors when the system tries to iterate over something that's empty or broken).
+
+
+✅ Why this works:
+
+formatted_prompt = prompt.format(
+    blog_style=blog_style,
+    input_text=input_text,
+    no_words=no_words
+)
+
+response = llm.invoke(formatted_prompt)
+
+This uses the LangChain’s PromptTemplate.format() method, which:
+
+Validates that all required input_variables (blog_style, input_text, no_words) are provided.
+
+Safely substitutes them into the template.
+
+Returns a string prompt, which is exactly what llm.invoke() expects.
+
+Once the prompt is properly formatted to a string, it’s passed to llm.invoke(), which then sends it to the underlying language model (like HuggingFace, OpenAI, etc.).
+
+
+
+| Approach                                | Treats prompt as                    | Outcome                                    |
+| --------------------------------------- | ----------------------------------- | ------------------------------------------ |
+| `prompt.format(...)` (your original)    | Regular Python string method        | ❌ Breaks if `prompt` is a `PromptTemplate` |
+| `prompt.format(...)` (LangChain method) | LangChain `PromptTemplate.format()` | ✅ Correct substitution and formatting      |
+| `llm.invoke(formatted_prompt)`          | Properly formatted string           | ✅ Works as expected                        |

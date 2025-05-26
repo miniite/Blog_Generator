@@ -6,7 +6,8 @@ from langchain_huggingface import HuggingFaceEndpoint
 
 # Load .env file for HuggingFace Token
 load_dotenv()
-st.secrets = 'HF_TOKEN'
+
+
 os.environ['HF_TOKEN']=st.secrets["HF_TOKEN"]
 
 

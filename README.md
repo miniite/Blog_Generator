@@ -21,7 +21,7 @@ The Blog Generation project is all about making content creation easier and more
 ## Getting Started
 To run this project locally, you'll need to set up a Python environment, have HuggingFace API and install the necessary dependencies.
 
-### Prerequisites
+### Prerequisites  
 - Python 3.10
 - Streamlit
 - LangChain

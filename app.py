@@ -7,6 +7,7 @@ from langchain_huggingface import HuggingFaceEndpoint
 # Load .env file for HuggingFace Token
 load_dotenv()
 os.environ['HF_TOKEN']=os.getenv("HF_TOKEN")
+st.secrets = 'HF_TOKEN'
 
 ## Function To get response from Model
 
@@ -19,13 +20,13 @@ def getLLamaresponse(input_text,no_words,blog_style):
         repo_id=repo_id, 
         huggingfacehub_api_token=os.environ["HF_TOKEN"],
         temperature=0.01,
-        max_new_tokens=256
+        max_new_tokens=500
     )
     
     ## Prompt Template
 
     template="""
-        Write a blog for {blog_style} audience on the topic {input_text}
+        Write a blog on the topic {input_text} for {blog_style} audience
         within {no_words} words.
             """
     

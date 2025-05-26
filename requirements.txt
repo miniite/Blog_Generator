@@ -6,3 +6,4 @@ python-box
 streamlit
 langchain-community
 langchain-huggingface
+protobuf

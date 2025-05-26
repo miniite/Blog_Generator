@@ -16,7 +16,7 @@ os.environ['HF_TOKEN']=st.secrets["HF_TOKEN"]
 def getLLamaresponse(input_text,no_words,blog_style):
 
     ### Model
-    repo_id = "meta-llama/Llama-3.1-8B-Instruct"
+    repo_id = "mistralai/Mistral-7B-Instruct-v0.1"
 
     llm = HuggingFaceEndpoint(
         repo_id=repo_id, 

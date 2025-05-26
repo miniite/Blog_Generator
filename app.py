@@ -13,7 +13,7 @@ os.environ['HF_TOKEN']=os.getenv("HF_TOKEN")
 def getLLamaresponse(input_text,no_words,blog_style):
 
     ### Model
-    repo_id = "mistralai/Mistral-7B-Instruct-v0.3"
+    repo_id = "meta-llama/Llama-3.1-8B-Instruct"
 
     llm = HuggingFaceEndpoint(
         repo_id=repo_id, 
@@ -25,7 +25,7 @@ def getLLamaresponse(input_text,no_words,blog_style):
     ## Prompt Template
 
     template="""
-        Write a blog for {blog_style} job profile for a topic {input_text}
+        Write a blog for {blog_style} audience on the topic {input_text}
         within {no_words} words.
             """
     
@@ -69,7 +69,7 @@ with col1:
     no_words=st.text_input('No of Words')
 with col2:
     blog_style=st.selectbox('Writing the blog for',
-                            ('Researchers','Data Scientist','Common People'),index=0)
+                            ('Beginner','Intermediate','Advanced'),index=0)
     
 submit=st.button("Generate")
 

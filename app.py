@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import streamlit as st
 from langchain.prompts import PromptTemplate
 from langchain_huggingface import HuggingFaceEndpoint
+from huggingface_hub.utils import HfHubHTTPError
 
 # Load .env file for HuggingFace Token
 load_dotenv()
@@ -82,5 +83,13 @@ if submit:
         st.error("Please enter a blog topic.")
     else:
         with st.spinner("Generating blog..."):
-            output = getLLamaresponse(input_text, no_words, blog_style)
-            st.write(output)
+            try:
+                output = getLLamaresponse(input_text, no_words, blog_style)
+                st.write(output)
+            except HfHubHTTPError as e:
+                if "Payment Required" in str(e):
+                    st.error("Sorry, exceeded the monthly included credits for Inference Providers.")
+                else:
+                    st.error(f"An error occurred: {e}")
+            except Exception as e:
+                st.error(f"Unexpected error: {e}")

@@ -92,4 +92,4 @@ if submit:
                 else:
                     st.error(f"An error occurred: {e}")
             except Exception as e:
-                st.error(f"Unexpected error: {e}")
+                st.error(f"Unexpected error: {type(e).__name__} - {e}")

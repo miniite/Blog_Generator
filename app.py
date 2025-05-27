@@ -91,5 +91,4 @@ if submit:
                     st.error("Sorry, exceeded the monthly included credits for Inference Providers.")
                 else:
                     st.error(f"An error occurred: {e}")
-            except Exception as e:
-                st.error(f"Unexpected error: {type(e).__name__} - {e}")
+            
